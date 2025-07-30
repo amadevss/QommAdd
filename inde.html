@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QommAdd - Plataforma de Eventos | Documentación Técnica</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --success: #16a34a;
+            --warning: #ca8a04;
+            --error: #dc2626;
+            --background: #ffffff;
+            --background-dark: #0f172a;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --border-dark: #334155;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--text);
+        }
+
+        .section-subtitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--text);
+        }
+
+        /* Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Code blocks */
+        .code-block {
+            background: var(--background-dark);
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        .code-inline {
+            background: #f1f5f9;
+            color: var(--error);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+
+        /* Lists */
+        .feature-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Tables */
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--background-dark);
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1><i class="fas fa-calendar-alt"></i> QommAdd</h1>
+            <p>Plataforma moderna para descubrir, crear y gestionar eventos locales con un enfoque en la experiencia del usuario y la escalabilidad.</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container nav-content">
+            <div class="logo">
+                <h2 style="color: var(--primary); margin: 0;">QommAdd</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#descripcion">Descripción</a></li>
+                <li><a href="#tecnologias">Tecnologías</a></li>
+                <li><a href="#arquitectura">Arquitectura</a></li>
+                <li><a href="#caracteristicas">Características</a></li>
+                <li><a href="#deployment">Deployment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Descripción del Proyecto -->
+    <section id="descripcion" class="section">
+        <div class="container">
+            <h2 class="section-title">🎯 Descripción del Proyecto</h2>
+            <div class="cards-grid">
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-search"></i></div>
+                    <h3>Descubrimiento de Eventos</h3>
+                    <p>Búsqueda y filtrado avanzado de eventos por ubicación, tipo, precio y fecha con interfaz intuitiva.</p>
+                </div>
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-plus-circle"></i></div>
+                    <h3>Creación de Eventos</h3>
+                    <p>Formularios intuitivos para crear eventos completos con validación en tiempo real y upload de imágenes.</p>
+                </div>
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-users"></i></div>
+                    <h3>Gestión de Usuarios</h3>
+                    <p>Sistema de autenticación robusto con perfiles personalizados y roles de administrador.</p>
+                </div>
+                <div class="card fade-in-up">
+                    <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Dashboard Administrativo</h3>
+                    <p>Panel completo para gestionar eventos, usuarios y métricas de engagement en tiempo real.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stack Tecnológico -->
+    <section id="tecnologias" class="section">
+        <div class="container">
+            <h2 class="section-title">🛠️ Stack Tecnológico</h2>
+            
+            <h3 class="section-subtitle">🎯 Frontend</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fab fa-react"></i></div>
+                    <h3>Next.js 15.3.5</h3>
+                    <p>Framework React con App Router, Server Components y optimizaciones avanzadas de performance.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fab fa-js"></i></div>
+                    <h3>TypeScript 5.x</h3>
+                    <p>Tipado estático para mayor seguridad y mejor experiencia de desarrollo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-palette"></i></div>
+                    <h3>Tailwind CSS 4.x</h3>
+                    <p>Framework CSS utility-first para diseño rápido y responsive.</p>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">🔧 Backend</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-database"></i></div>
+                    <h3>PostgreSQL</h3>
+                    <p>Base de datos relacional con soporte JSONB para datos complejos y consultas optimizadas.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>NextAuth.js 5.0</h3>
+                    <p>Sistema de autenticación completo con múltiples providers y sesiones seguras.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-cloud"></i></div>
+                    <h3>Vercel Blob Storage</h3>
+                    <p>Almacenamiento de archivos optimizado para imágenes con CDN global.</p>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">📊 Herramientas de Desarrollo</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Herramienta</th>
+                            <th>Versión</th>
+                            <th>Propósito</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="fab fa-node-js"></i> Node.js</td>
+                            <td>18+</td>
+                            <td>Runtime de JavaScript</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-code"></i> ESLint</td>
+                            <td>9.x</td>
+                            <td>Linting y formateo de código</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-rocket"></i> Turbopack</td>
+                            <td>Built-in</td>
+                            <td>Bundler rápido para desarrollo</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-cogs"></i> SWC</td>
+                            <td>Built-in</td>
+                            <td>Compilador de TypeScript/JavaScript</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arquitectura del Sistema -->
+    <section id="arquitectura" class="section">
+        <div class="container">
+            <h2 class="section-title">🏗️ Arquitectura del Sistema</h2>
+            
+            <h3 class="section-subtitle">📁 Estructura del Proyecto</h3>
+            <div class="code-block">
+src/
+├── app/                    # App Router (Next.js 13+)
+│   ├── actions/           # Server Actions
+│   ├── api/              # API Routes
+│   ├── auth/             # Páginas de autenticación
+│   ├── dashboard/        # Panel administrativo
+│   ├── events/          # Páginas de eventos
+│   └── layout.tsx       # Layout principal
+├── components/           # Componentes reutilizables
+│   ├── ui/             # Componentes base (Radix UI)
+│   ├── charts/         # Componentes de gráficos
+│   └── [feature]/      # Componentes específicos
+├── lib/                # Utilidades y configuración
+├── hooks/              # Custom React Hooks
+└── types/              # Definiciones de TypeScript
+            </div>
+
+            <h3 class="section-subtitle">🔄 Flujo de Datos</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-mouse-pointer"></i></div>
+                    <h3>1. User Input</h3>
+                    <p>El usuario interactúa con formularios y componentes de la interfaz.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-server"></i></div>
+                    <h3>2. Server Action</h3>
+                    <p>Los datos se procesan en el servidor usando Server Actions de Next.js.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-database"></i></div>
+                    <h3>3. Database Query</h3>
+                    <p>Consultas optimizadas a PostgreSQL con soporte para JSONB.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-sync"></i></div>
+                    <h3>4. UI Update</h3>
+                    <p>La interfaz se actualiza con feedback visual y optimistic updates.</p>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">🎯 Patrones de Diseño</h3>
+            <ul class="feature-list">
+                <li><strong>Server Components:</strong> Renderizado en servidor para mejor performance</li>
+                <li><strong>Client Components:</strong> Interactividad en el cliente cuando es necesario</li>
+                <li><strong>Server Actions:</strong> Mutaciones de datos sin API routes</li>
+                <li><strong>Optimistic Updates:</strong> UI responsive durante operaciones</li>
+                <li><strong>Error Boundaries:</strong> Manejo robusto de errores</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Base de Datos -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">📊 Base de Datos</h2>
+            
+            <h3 class="section-subtitle">🗄️ Esquema Principal</h3>
+            <div class="code-block">
+-- Tabla de Eventos
+CREATE TABLE events (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  event_type VARCHAR(100),
+  event_date TIMESTAMP,
+  is_free BOOLEAN DEFAULT false,
+  price DECIMAL(10,2),
+  status VARCHAR(50) DEFAULT 'active',
+  
+  -- Métricas de Engagement
+  views_count INTEGER DEFAULT 0,
+  clicks_count INTEGER DEFAULT 0,
+  saved_count INTEGER DEFAULT 0,
+  shared_count INTEGER DEFAULT 0,
+  rsvps_count INTEGER DEFAULT 0,
+  
+  -- Metadatos
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW(),
+  image_url TEXT,
+  description TEXT,
+  tags TEXT[],
+  
+  -- Datos Relacionados (JSONB)
+  organizer JSONB,
+  location JSONB,
+  creator JSONB,
+  user_id INTEGER
+);
+            </div>
+
+            <h3 class="section-subtitle">📈 Tipos de Datos TypeScript</h3>
+            <div class="code-block">
+interface Event {
+  id: number
+  title: string
+  event_type: string
+  event_date: string
+  is_free: boolean
+  price?: number
+  status: string
+  
+  // Métricas
+  views_count: number
+  clicks_count: number
+  saved_count: number
+  shared_count: number
+  rsvps_count: number
+  
+  // Metadatos
+  created_at: string
+  updated_at: string
+  image_url?: string
+  description?: string
+  tags?: string[]
+  
+  // Relaciones JSONB
+  organizer: OrganizerData
+  location: LocationData
+  creator: CreatorData
+  user_id?: number
+}
+            </div>
+        </div>
+    </section>
+
+    <!-- Características Principales -->
+    <section id="caracteristicas" class="section">
+        <div class="container">
+            <h2 class="section-title">🚀 Características Principales</h2>
+            
+            <h3 class="section-subtitle">✨ Funcionalidades Core</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-search"></i></div>
+                    <h3>Búsqueda Avanzada</h3>
+                    <p>Filtros por ubicación, tipo, precio y fecha con resultados en tiempo real.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-calendar"></i></div>
+                    <h3>Calendario de Eventos</h3>
+                    <p>Vista temporal de eventos próximos con navegación intuitiva.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-tags"></i></div>
+                    <h3>Sistema de Tags</h3>
+                    <p>Categorización por estilos de baile y tipos de eventos.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h3>Métricas en Tiempo Real</h3>
+                    <p>Seguimiento de engagement y performance con analytics detallados.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-image"></i></div>
+                    <h3>Gestión de Imágenes</h3>
+                    <p>Upload optimizado con validación de tamaño y tipo de archivo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>Responsive Design</h3>
+                    <p>Experiencia optimizada para todos los dispositivos y pantallas.</p>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">🎨 Interfaz de Usuario</h3>
+            <ul class="feature-list">
+                <li><strong>Tema Oscuro/Claro:</strong> Soporte completo para ambos temas</li>
+                <li><strong>Componentes Reutilizables:</strong> UI consistente con Radix UI</li>
+                <li><strong>Animaciones Suaves:</strong> Transiciones fluidas y feedback visual</li>
+                <li><strong>Toast Notifications:</strong> Feedback inmediato para acciones del usuario</li>
+                <li><strong>Accesibilidad:</strong> Cumplimiento con estándares WCAG 2.1</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Performance y Optimización -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">⚡ Performance y Optimización</h2>
+            
+            <h3 class="section-subtitle">📊 Métricas de Performance</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">&lt; 2.5s</div>
+                    <div class="stat-label">LCP (Largest Contentful Paint)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">&lt; 100ms</div>
+                    <div class="stat-label">FID (First Input Delay)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">&lt; 0.1</div>
+                    <div class="stat-label">CLS (Cumulative Layout Shift)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">&lt; 600ms</div>
+                    <div class="stat-label">TTFB (Time to First Byte)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">&lt; 250KB</div>
+                    <div class="stat-label">Bundle Size (gzipped)</div>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">🚀 Optimizaciones Implementadas</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-server"></i></div>
+                    <h3>Server Components</h3>
+                    <p>Renderizado en servidor para mejor performance y SEO.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-image"></i></div>
+                    <h3>Image Optimization</h3>
+                    <p>Optimización automática de imágenes con formatos modernos.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-font"></i></div>
+                    <h3>Font Optimization</h3>
+                    <p>Carga optimizada de fuentes con preloading inteligente.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-database"></i></div>
+                    <h3>Database Optimization</h3>
+                    <p>Consultas indexadas y connection pooling para mejor rendimiento.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Deployment e Infraestructura -->
+    <section id="deployment" class="section">
+        <div class="container">
+            <h2 class="section-title">🚀 Deployment e Infraestructura</h2>
+            
+            <h3 class="section-subtitle">☁️ Plataforma de Deployment</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fab fa-vercel"></i></div>
+                    <h3>Vercel Platform</h3>
+                    <p>Deployment automático con Git integration y rollback instantáneo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Global CDN</h3>
+                    <p>Distribución global de contenido con edge locations.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-database"></i></div>
+                    <h3>Vercel Postgres</h3>
+                    <p>Base de datos PostgreSQL gestionada con backups automáticos.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-cloud"></i></div>
+                    <h3>Vercel Blob Storage</h3>
+                    <p>Almacenamiento de archivos con CDN global para imágenes.</p>
+                </div>
+            </div>
+
+            <h3 class="section-subtitle">🔧 Variables de Entorno</h3>
+            <div class="code-block">
+# Database
+DATABASE_URL=postgresql://...
+POSTGRES_URL=postgresql://...
+POSTGRES_PRISMA_URL=postgresql://...
+
+# Authentication
+NEXTAUTH_URL=https://...
+NEXTAUTH_SECRET=...
+
+# Storage
+BLOB_READ_WRITE_TOKEN=...
+
+# External Services
+NEXT_PUBLIC_APP_URL=...
+            </div>
+
+            <h3 class="section-subtitle">📊 Monitoreo y Analytics</h3>
+            <ul class="feature-list">
+                <li><strong>Vercel Analytics:</strong> Performance tracking y métricas de usuarios</li>
+                <li><strong>Error Tracking:</strong> Sentry integration para monitoreo de errores</li>
+                <li><strong>Uptime Monitoring:</strong> Monitoreo de disponibilidad 24/7</li>
+                <li><strong>Vercel Logs:</strong> Logs estructurados para debugging</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- API Documentation -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">📚 API Documentation</h2>
+            
+            <h3 class="section-subtitle">🔗 Endpoints Principales</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Endpoint</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="code-inline">GET</span></td>
+                            <td><code>/api/events</code></td>
+                            <td>Listar todos los eventos</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code-inline">POST</span></td>
+                            <td><code>/api/events</code></td>
+                            <td>Crear nuevo evento</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code-inline">GET</span></td>
+                            <td><code>/api/events/[id]</code></td>
+                            <td>Obtener evento específico</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code-inline">PUT</span></td>
+                            <td><code>/api/events/[id]</code></td>
+                            <td>Actualizar evento</td>
+                        </tr>
+                        <tr>
+                            <td><span class="code-inline">DELETE</span></td>
+                            <td><code>/api/events/[id]</code></td>
+                            <td>Eliminar evento</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 class="section-subtitle">📝 Server Actions</h3>
+            <div class="code-block">
+// Event Actions
+createEvent(formData: FormData)
+updateEvent(id: number, formData: FormData)
+deleteEvent(id: number)
+getAllEvents(userId?: number)
+getEventById(id: number)
+
+// Analytics Actions
+incrementViewCount(eventId: number)
+incrementSharedCount(eventId: number)
+incrementSavedCount(eventId: number)
+
+// Upload Actions
+uploadImage(formData: FormData)
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div>
+                <h3>QommAdd</h3>
+                <p>Plataforma moderna de eventos</p>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to top button -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll to top functionality
+        const scrollTop = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+
+        scrollTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.card, .section').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html> 
